@@ -11,15 +11,17 @@ class ToDoListManager:
             print(f"{idx}. {task['description']} - {status}")
 
     def mark_task_completed(self, task_description):
-        #print(self.tasks[task_description])
+        description_ = self.tasks[int(task_description)-1]['description']
         for task in self.tasks:
-            #print(task["description"])
-            if task["description"] == task_description:
+            if task["description"] == description_:
                 task["completed"] = True
                 status = "Completed" if task["completed"] else "Pending"
                 print(f"{task['description']} - {status}")
                 break
             
+    def remove_task(self, task_description):
+        description_ = self.tasks[int(task_description)-1]['description']
+        self.tasks = [task for task in self.tasks if task["description"] != description_]
 
     def clear_tasks(self):
         self.tasks = []
@@ -33,7 +35,8 @@ if __name__ == "__main__":
         print("2. List all the tasks in the to-do list")
         print("3. Mark a task as completed")
         print("4. Clear the entire to-do list")
-        print("5. Exit")
+        print("5. Remove task")
+        print("6. Exit")
         print("------------------------------------------")
 
         option = input("Select an option: ")
@@ -49,6 +52,8 @@ if __name__ == "__main__":
         elif option == "4":
             todo_manager.clear_tasks()
         elif option == "5":
+            todo_manager.remove_task()
+        elif option == "6":
             break
         else:
             print("Invalid option. Try again.")
